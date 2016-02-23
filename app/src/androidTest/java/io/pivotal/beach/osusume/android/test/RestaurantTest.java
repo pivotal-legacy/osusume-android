@@ -32,6 +32,6 @@ public class RestaurantTest extends ActivityInstrumentationTestCase2<OsusumeActi
 
         assertTrue(solo.searchText("Something Else"));
         assertTrue(solo.searchText("Added by A"));
-        assertTrue(solo.searchText("Created on 02/18/16"));
+        assertTrue(solo.searchText("Created on 02/22/16"));
 	}
 }
