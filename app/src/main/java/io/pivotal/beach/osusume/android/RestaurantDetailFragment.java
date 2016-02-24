@@ -7,15 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
 import io.pivotal.beach.osusume.android.models.Restaurant;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantDetailFragment extends Fragment {
     public static String TAG = RestaurantDetailFragment.class.getName();
@@ -25,6 +23,15 @@ public class RestaurantDetailFragment extends Fragment {
     TextView restaurantNameView;
 
     Restaurant restaurant;
+
+    @Inject
+    OsusumeApiClient osusumeApiClient;
+
+    @Override
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+        ((OsusumeApplication) getActivity().getApplication()).getAppComponent().inject(this);
+    }
 
     public static RestaurantDetailFragment newInstance(int restaurantId) {
         RestaurantDetailFragment fragment = new RestaurantDetailFragment();
@@ -49,24 +56,9 @@ public class RestaurantDetailFragment extends Fragment {
 
         return rootView;
     }
-    
-    private static String BASE_URL = "http://osusume.cfapps.io";
 
     private void updateRestaurant() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        OsusumeApiClient apiClient = retrofit.create(OsusumeApiClient.class);
-
-        Call<Restaurant> call = apiClient.getRestaurant(getRetaurantId());
-        call.enqueue(new Callback<Restaurant>() {
+        osusumeApiClient.getRestaurant(getRetaurantId()).enqueue(new Callback<Restaurant>() {
             @Override
             public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
                 restaurant = response.body();

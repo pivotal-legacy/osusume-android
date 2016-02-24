@@ -13,16 +13,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import io.pivotal.beach.osusume.android.presenters.RestaurantPresenter;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -33,7 +31,16 @@ public class RetaurantListFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private List<Restaurant> restaurantList;
 
+    @Inject
+    OsusumeApiClient osusumeApiClient;
+
     public RetaurantListFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+        ((OsusumeApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override
@@ -55,23 +62,8 @@ public class RetaurantListFragment extends Fragment {
         return rootView;
     }
 
-    private static String BASE_URL = "http://osusume.cfapps.io";
-
     private void updateRestaurants() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        OsusumeApiClient apiClient = retrofit.create(OsusumeApiClient.class);
-
-        Call<List<Restaurant>> call = apiClient.getRestaurants();
-        call.enqueue(new Callback<List<Restaurant>>() {
+        osusumeApiClient.getRestaurants().enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
                 restaurantList.clear();
