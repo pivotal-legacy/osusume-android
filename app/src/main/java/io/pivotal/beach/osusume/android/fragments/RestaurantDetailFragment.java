@@ -1,4 +1,4 @@
-package io.pivotal.beach.osusume.android;
+package io.pivotal.beach.osusume.android.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.pivotal.beach.osusume.android.R;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import retrofit2.Call;
 import retrofit2.Callback;

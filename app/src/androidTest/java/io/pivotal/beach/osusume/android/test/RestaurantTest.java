@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 
-import io.pivotal.beach.osusume.android.OsusumeActivity;
+import io.pivotal.beach.osusume.android.activities.OsusumeActivity;
 import io.pivotal.beach.osusume.android.R;
 
 import static android.support.test.espresso.Espresso.onView;

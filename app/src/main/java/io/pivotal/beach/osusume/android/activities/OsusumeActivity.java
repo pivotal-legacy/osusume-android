@@ -1,8 +1,10 @@
-package io.pivotal.beach.osusume.android;
+package io.pivotal.beach.osusume.android.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import io.pivotal.beach.osusume.android.R;
 
 public class OsusumeActivity extends AppCompatActivity {
 

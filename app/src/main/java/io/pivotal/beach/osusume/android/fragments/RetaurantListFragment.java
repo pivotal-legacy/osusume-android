@@ -1,4 +1,4 @@
-package io.pivotal.beach.osusume.android;
+package io.pivotal.beach.osusume.android.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.pivotal.beach.osusume.android.R;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import io.pivotal.beach.osusume.android.presenters.RestaurantPresenter;
 import retrofit2.Call;

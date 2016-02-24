@@ -3,7 +3,7 @@
     android:id="@+id/banana"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RetaurantListFragment"
+    tools:context=".fragments.RetaurantListFragment"
     tools:showIn="@layout/activity_osusume">
 
     <android.support.v7.widget.RecyclerView
