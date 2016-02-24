@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/banana"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.pivotal.beach.osusume.android.OsusumeActivityFragment"
+    tools:context=".RetaurantListFragment"
     tools:showIn="@layout/activity_osusume">
 
     <android.support.v7.widget.RecyclerView
