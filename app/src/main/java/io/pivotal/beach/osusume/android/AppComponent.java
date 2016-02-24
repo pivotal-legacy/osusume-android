@@ -7,6 +7,5 @@ import dagger.Component;
 @Singleton
 @Component(modules={AppModule.class})
 public interface AppComponent {
-     void inject(RestaurantDetailFragment fragment);
-     void inject(RetaurantListFragment fragment);
+     void inject(ApiFragment fragment);
 }

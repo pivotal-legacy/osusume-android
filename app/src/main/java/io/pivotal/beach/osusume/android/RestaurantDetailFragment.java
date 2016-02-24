@@ -1,21 +1,17 @@
 package io.pivotal.beach.osusume.android;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import javax.inject.Inject;
-
-import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RestaurantDetailFragment extends Fragment {
+public class RestaurantDetailFragment extends ApiFragment {
     public static String TAG = RestaurantDetailFragment.class.getName();
 
     private static String FRAGMENT_RESTAURANT_ID = "fragmentRestaurantId";
@@ -23,15 +19,6 @@ public class RestaurantDetailFragment extends Fragment {
     TextView restaurantNameView;
 
     Restaurant restaurant;
-
-    @Inject
-    OsusumeApiClient osusumeApiClient;
-
-    @Override
-    public void onCreate(Bundle savedInstance) {
-        super.onCreate(savedInstance);
-        ((OsusumeApplication) getActivity().getApplication()).getAppComponent().inject(this);
-    }
 
     public static RestaurantDetailFragment newInstance(int restaurantId) {
         RestaurantDetailFragment fragment = new RestaurantDetailFragment();
@@ -70,7 +57,4 @@ public class RestaurantDetailFragment extends Fragment {
             }
         });
     }
-
-
-
 }

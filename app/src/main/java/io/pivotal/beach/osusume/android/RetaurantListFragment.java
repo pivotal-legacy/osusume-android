@@ -1,7 +1,6 @@
 package io.pivotal.beach.osusume.android;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,34 +12,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import io.pivotal.beach.osusume.android.presenters.RestaurantPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class RetaurantListFragment extends Fragment {
+public class RetaurantListFragment extends ApiFragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Restaurant> restaurantList;
 
-    @Inject
-    OsusumeApiClient osusumeApiClient;
-
     public RetaurantListFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstance) {
-        super.onCreate(savedInstance);
-        ((OsusumeApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override
