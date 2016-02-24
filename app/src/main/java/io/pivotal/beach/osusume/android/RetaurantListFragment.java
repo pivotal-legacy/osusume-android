@@ -79,20 +79,19 @@ public class RetaurantListFragment extends ApiFragment {
                 this.restaurantAuthorView = restaurantAuthorView;
                 this.restaurantCreatedAtView = restaurantCreatedAtView;
 
-                containerView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Restaurant restaurant = restaurants.get(ViewHolder.this.getAdapterPosition());
-                        int id = restaurant.getId();
+                containerView.setOnClickListener((View v) -> onClick(v));
+            }
 
-                        RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(id);
-                        FragmentManager fragmentManager = RetaurantListFragment.this.getFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.fragment, detailFragment, RestaurantDetailFragment.TAG)
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                });
+            void onClick(View v) {
+                Restaurant restaurant = restaurants.get(getAdapterPosition());
+                int id = restaurant.getId();
+
+                RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(id);
+                FragmentManager fragmentManager = RetaurantListFragment.this.getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment, detailFragment, RestaurantDetailFragment.TAG)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
 
