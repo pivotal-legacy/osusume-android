@@ -1,14 +1,22 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/banana"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RetaurantListFragment"
-    tools:showIn="@layout/activity_osusume">
+    tools:context=".fragments.RestaurantListFragment"
+    tools:showIn="@layout/activity_restaurant_list">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/restaurantListView" />
 
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addRestaurantButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_btn_speak_now" />
+
+</android.support.design.widget.CoordinatorLayout>

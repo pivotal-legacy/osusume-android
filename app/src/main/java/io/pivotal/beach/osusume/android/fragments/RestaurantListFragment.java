@@ -1,6 +1,8 @@
 package io.pivotal.beach.osusume.android.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,20 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.pivotal.beach.osusume.android.R;
+import io.pivotal.beach.osusume.android.activities.NewRestaurantActivity;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import io.pivotal.beach.osusume.android.presenters.RestaurantPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RetaurantListFragment extends ApiFragment {
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private List<Restaurant> restaurantList;
-
-    public RetaurantListFragment() {
-    }
+public class RestaurantListFragment extends ApiFragment {
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<Restaurant> restaurantList;
+    FloatingActionButton floatingActionButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,15 +37,27 @@ public class RetaurantListFragment extends ApiFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.addRestaurantButton);
+        floatingActionButton.setOnClickListener((View view) -> onAddRestaurantButtonClicked(view));
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.restaurantListView);
         recyclerView.setAdapter(adapter);
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        updateRestaurants();
-
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateRestaurants();
+    }
+
+    public void onAddRestaurantButtonClicked(View view) {
+        Intent intent = new Intent(getActivity(), NewRestaurantActivity.class);
+        getActivity().startActivity(intent);
     }
 
     private void updateRestaurants() {
@@ -88,9 +101,9 @@ public class RetaurantListFragment extends ApiFragment {
                 int id = restaurant.getId();
 
                 RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(id);
-                FragmentManager fragmentManager = RetaurantListFragment.this.getFragmentManager();
+                FragmentManager fragmentManager = RestaurantListFragment.this.getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragment, detailFragment, RestaurantDetailFragment.TAG)
+                        .replace(R.id.restaurantListFragment, detailFragment, RestaurantDetailFragment.TAG)
                         .addToBackStack(null)
                         .commit();
             }

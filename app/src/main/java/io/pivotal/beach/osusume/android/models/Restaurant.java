@@ -6,6 +6,11 @@ public class Restaurant {
     Long created_at;
     User user;
 
+    public Restaurant(String name, User user) {
+        this.name = name;
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
