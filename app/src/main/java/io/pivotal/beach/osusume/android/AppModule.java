@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.pivotal.beach.osusume.android.api.AuthorizationHeaderInterceptor;
 import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -17,10 +18,19 @@ public class AppModule {
 
     @Provides
     @Singleton
-    OsusumeApiClient provideOsusumeApiClient() {
+    AuthorizationHeaderInterceptor provideAuthorizationHeaderInterceptor() {
+        return new AuthorizationHeaderInterceptor();
+    }
+
+    @Provides
+    @Singleton
+    OsusumeApiClient provideOsusumeApiClient(AuthorizationHeaderInterceptor authorizationHeaderInterceptor) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .addInterceptor(authorizationHeaderInterceptor)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

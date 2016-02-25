@@ -13,9 +13,7 @@ import io.pivotal.beach.osusume.android.OsusumeApplication;
 import io.pivotal.beach.osusume.android.R;
 import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
 import io.pivotal.beach.osusume.android.fragments.NewRestaurantFragment;
-import io.pivotal.beach.osusume.android.models.Login;
 import io.pivotal.beach.osusume.android.models.Restaurant;
-import io.pivotal.beach.osusume.android.models.Token;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,31 +56,19 @@ public class NewRestaurantActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.createRestaurant) {
-            Login login = new Login("A", "A");
-            osusumeApiClient.login(login).enqueue(new Callback<Token>() {
+            String restaurantName = restaurantNameField.getText().toString();
+            Restaurant restaurant = new Restaurant(restaurantName, null);
+
+            osusumeApiClient.postRestaurant(restaurant).enqueue(new Callback<Restaurant>() {
                 @Override
-                public void onResponse(Call<Token> call, Response<Token> response) {
-                    String foo = restaurantNameField.getText().toString();
-                    Restaurant restaurant = new Restaurant(foo, null);
-
-                    String header = "Bearer " + response.body().getToken();
-                    osusumeApiClient.postRestaurant(restaurant, header).enqueue(new Callback<Restaurant>() {
-                        @Override
-                        public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
-                            if (response.code() == 200) {
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Restaurant> call, Throwable t) {
-
-                        }
-                    });
+                public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
+                    if (response.code() == 200) {
+                        finish();
+                    }
                 }
 
                 @Override
-                public void onFailure(Call<Token> call, Throwable t) {
+                public void onFailure(Call<Restaurant> call, Throwable t) {
 
                 }
             });

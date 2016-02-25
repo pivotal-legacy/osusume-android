@@ -8,7 +8,6 @@ import io.pivotal.beach.osusume.android.models.Token;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -23,5 +22,5 @@ public interface OsusumeApiClient {
     Call<Restaurant> getRestaurant(@Path("id") Integer id);
 
     @POST("/restaurants")
-    Call<Restaurant> postRestaurant(@Body Restaurant restaurant, @Header("Authorization") String token);
+    Call<Restaurant> postRestaurant(@Body Restaurant restaurant);
 }
