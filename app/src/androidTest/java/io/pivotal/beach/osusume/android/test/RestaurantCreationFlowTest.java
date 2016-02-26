@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.containsString;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class RestaurantTest {
+public class RestaurantCreationFlowTest {
     Calendar today = Calendar.getInstance();
     Date date = new Date();
 
@@ -36,7 +36,7 @@ public class RestaurantTest {
     public ActivityTestRule<RestaurantListActivity> mActivityRule = new ActivityTestRule<>(RestaurantListActivity.class);
 
     @Test
-    public void changeText_sameActivity() throws Exception {
+    public void user_creates_restaurant() throws Exception {
         String newRestaurantName = "New Restaurant " + date.toString();
 
         // Create Restaurant
