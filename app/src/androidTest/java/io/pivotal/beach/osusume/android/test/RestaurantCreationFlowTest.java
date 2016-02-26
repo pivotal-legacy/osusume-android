@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.pivotal.beach.osusume.android.R;
-import io.pivotal.beach.osusume.android.activities.RestaurantListActivity;
+import io.pivotal.beach.osusume.android.activities.LoginActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -33,18 +33,22 @@ public class RestaurantCreationFlowTest {
     Date date = new Date();
 
     @Rule
-    public ActivityTestRule<RestaurantListActivity> mActivityRule = new ActivityTestRule<>(RestaurantListActivity.class);
+    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
     public void user_creates_restaurant() throws Exception {
-        String newRestaurantName = "New Restaurant " + date.toString();
+        // Login
+        onView(withId(R.id.loginEmail)).perform(typeText("A"));
+        onView(withId(R.id.loginPassword)).perform(typeText("A"));
+        onView(withId(R.id.loginButton)).perform(click());
+        sleep(2000); // TODO: DO NOT SLEEP
 
         // Create Restaurant
+        String newRestaurantName = "New Restaurant " + date.toString();
+
         onView(withId(R.id.addRestaurantButton)).perform(click());
         onView(withId(R.id.newRestaurantNameField)).perform(typeText(newRestaurantName));
         onView(withId(R.id.createRestaurant)).perform(click());
-
-        // TODO: DO NOT SLEEP
         sleep(2000);
 
         onView(withRecyclerView(R.id.restaurantListView).atPositionOnView(0, R.id.restaurantAuthor))
@@ -55,8 +59,6 @@ public class RestaurantCreationFlowTest {
 
         // Click on First Restaurant
         onView(withId(R.id.restaurantListView)).perform(actionOnItemAtPosition(0, click()));
-
-        // TODO: DO NOT SLEEP
         sleep(2000);
 
         onView(withId(R.id.restaurantDetailsName))
