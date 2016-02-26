@@ -37,11 +37,15 @@ public class RestaurantTest {
 
     @Test
     public void changeText_sameActivity() throws Exception {
+        String newRestaurantName = "New Restaurant " + date.toString();
+
+        // Create Restaurant
+        onView(withId(R.id.addRestaurantButton)).perform(click());
+        onView(withId(R.id.newRestaurantNameField)).perform(typeText(newRestaurantName));
+        onView(withId(R.id.createRestaurant)).perform(click());
+
         // TODO: DO NOT SLEEP
         sleep(2000);
-
-//        onView(withRecyclerView(R.id.restaurantListView).atPositionOnView(0, R.id.restaurantName))
-//                .check(matches(withText(containsString("2016-"))));
 
         onView(withRecyclerView(R.id.restaurantListView).atPositionOnView(0, R.id.restaurantAuthor))
                 .check(matches(withText("Added by A")));
@@ -49,24 +53,8 @@ public class RestaurantTest {
         onView(withRecyclerView(R.id.restaurantListView).atPositionOnView(0, R.id.restaurantCreatedAt))
                 .check(matches(withText("Created on " + DateFormat.format("MM/dd/yy", today).toString())));
 
-        String newRestaurantName = "New Restaurant " + date.toString();
-
-        // Create Restaurant
-        onView(withId(R.id.addRestaurantButton))
-                .perform(click());
-
-        onView(withId(R.id.newRestaurantNameField))
-                .perform(typeText(newRestaurantName));
-
-        onView(withId(R.id.createRestaurant))
-                .perform(click());
-
-        // TODO: DO NOT SLEEP
-        sleep(2000);
-
         // Click on First Restaurant
-        onView(withId(R.id.restaurantListView))
-                .perform(actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.restaurantListView)).perform(actionOnItemAtPosition(0, click()));
 
         // TODO: DO NOT SLEEP
         sleep(2000);
