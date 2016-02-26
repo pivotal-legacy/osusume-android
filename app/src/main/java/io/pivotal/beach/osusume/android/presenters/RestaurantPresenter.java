@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import io.pivotal.beach.osusume.android.models.Restaurant;
 
-// TODO: Unit test this class
 public class RestaurantPresenter {
     Restaurant restaurant;
 

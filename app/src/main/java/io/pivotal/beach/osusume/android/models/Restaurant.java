@@ -11,6 +11,13 @@ public class Restaurant {
         this.user = user;
     }
 
+    public Restaurant(Integer id, String name, Long created_at, User user) {
+        this.id = id;
+        this.name = name;
+        this.created_at = created_at;
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
