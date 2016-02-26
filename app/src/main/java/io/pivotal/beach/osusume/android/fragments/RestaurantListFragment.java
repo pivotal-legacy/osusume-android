@@ -26,7 +26,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RestaurantListFragment extends ApiFragment {
-    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
     List<Restaurant> restaurantList = new ArrayList<Restaurant>();
     RecyclerView.Adapter adapter = new RestaurantAdapter(restaurantList);
 
@@ -42,7 +41,7 @@ public class RestaurantListFragment extends ApiFragment {
         ButterKnife.bind(this, rootView);
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
     }
