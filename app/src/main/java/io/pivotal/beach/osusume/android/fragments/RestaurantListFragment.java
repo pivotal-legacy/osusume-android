@@ -14,6 +14,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.pivotal.beach.osusume.android.R;
 import io.pivotal.beach.osusume.android.activities.NewRestaurantActivity;
 import io.pivotal.beach.osusume.android.models.Restaurant;
@@ -23,27 +26,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RestaurantListFragment extends ApiFragment {
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+    List<Restaurant> restaurantList = new ArrayList<Restaurant>();
+    RecyclerView.Adapter adapter = new RestaurantAdapter(restaurantList);
+
+    @Bind(R.id.restaurantListView)
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    RecyclerView.LayoutManager layoutManager;
-    List<Restaurant> restaurantList;
+
+    @Bind(R.id.addRestaurantButton)
     FloatingActionButton floatingActionButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        restaurantList = new ArrayList<Restaurant>();
-        adapter = new RestaurantAdapter(restaurantList);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
+        ButterKnife.bind(this, rootView);
 
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.addRestaurantButton);
-        floatingActionButton.setOnClickListener((View view) -> onAddRestaurantButtonClicked(view));
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.restaurantListView);
         recyclerView.setAdapter(adapter);
-
-        layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         return rootView;
@@ -55,12 +53,13 @@ public class RestaurantListFragment extends ApiFragment {
         updateRestaurants();
     }
 
+    @OnClick(R.id.addRestaurantButton)
     public void onAddRestaurantButtonClicked(View view) {
         Intent intent = new Intent(getActivity(), NewRestaurantActivity.class);
         getActivity().startActivity(intent);
     }
 
-    private void updateRestaurants() {
+    void updateRestaurants() {
         osusumeApiClient.getRestaurants().enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
@@ -83,19 +82,21 @@ public class RestaurantListFragment extends ApiFragment {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
+            @Bind(R.id.restaurantName)
             public TextView restaurantNameView;
+
+            @Bind(R.id.restaurantAuthor)
             public TextView restaurantAuthorView;
+
+            @Bind(R.id.restaurantCreatedAt)
             public TextView restaurantCreatedAtView;
 
-            public ViewHolder(View containerView, TextView restaurantNameView, TextView restaurantAuthorView, TextView restaurantCreatedAtView) {
+            public ViewHolder(View containerView) {
                 super(containerView);
-                this.restaurantNameView = restaurantNameView;
-                this.restaurantAuthorView = restaurantAuthorView;
-                this.restaurantCreatedAtView = restaurantCreatedAtView;
-
-                containerView.setOnClickListener((View v) -> onClick(v));
+                ButterKnife.bind(this, containerView);
             }
 
+            @OnClick(R.id.listItemRestaurantView)
             void onClick(View v) {
                 Restaurant restaurant = restaurants.get(getAdapterPosition());
                 int id = restaurant.getId();
@@ -112,12 +113,7 @@ public class RestaurantListFragment extends ApiFragment {
         @Override
         public RestaurantAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_restaurant, parent, false);
-
-            TextView restaurantNameView = (TextView) view.findViewById(R.id.restaurantName);
-            TextView restaurantAuthorView = (TextView) view.findViewById(R.id.restaurantAuthor);
-            TextView restaurantCreatedAtView = (TextView) view.findViewById(R.id.restaurantCreatedAt);
-
-            return new ViewHolder(view, restaurantNameView, restaurantAuthorView, restaurantCreatedAtView);
+            return new ViewHolder(view);
         }
 
         @Override

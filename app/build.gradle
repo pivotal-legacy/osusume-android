@@ -28,6 +28,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
@@ -41,6 +44,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
 
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     compile 'com.google.dagger:dagger:2.0.2'
