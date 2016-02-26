@@ -21,6 +21,5 @@ public class RestaurantListActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.restaurantListFragment, new RestaurantListFragment(), NewRestaurantFragment.TAG)
                 .commit();
-
     }
 }
