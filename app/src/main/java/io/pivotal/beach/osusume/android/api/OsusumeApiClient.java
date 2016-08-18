@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface OsusumeApiClient {
-    @POST("/login")
+    @POST("/session")
     Call<Token> login(@Body Login login);
 
     @GET("/restaurants")
