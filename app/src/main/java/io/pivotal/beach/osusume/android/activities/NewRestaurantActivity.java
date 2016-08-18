@@ -1,24 +1,21 @@
 package io.pivotal.beach.osusume.android.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
 import javax.inject.Inject;
 
-import io.pivotal.beach.osusume.android.OsusumeApplication;
 import io.pivotal.beach.osusume.android.R;
 import io.pivotal.beach.osusume.android.api.OsusumeApiClient;
-import io.pivotal.beach.osusume.android.fragments.NewRestaurantFragment;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewRestaurantActivity extends AppCompatActivity {
+public class NewRestaurantActivity extends Activity {
 
     @Inject
     OsusumeApiClient osusumeApiClient;
@@ -28,15 +25,6 @@ public class NewRestaurantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((OsusumeApplication) getApplication()).getAppComponent().inject(this);
-        setContentView(R.layout.activity_new_restaurant);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.newRestaurantFragment, new NewRestaurantFragment(), NewRestaurantFragment.TAG)
-                .commit();
     }
 
     @Override
