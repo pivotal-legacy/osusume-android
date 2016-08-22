@@ -20,16 +20,15 @@ public class RestaurantPresenterTest {
 
     @Before
     public void setup() {
-        long timestamp = 1456447726; // represents 2016-02-26 09:48:46 +0900
         User user = new User("Danny Burkes");
-        Restaurant restaurant = new Restaurant(1, "Butagumi", timestamp, user);
+        Restaurant restaurant = new Restaurant(1, "Butagumi", "2016-02-26 09:48:46 +0900", user);
 
         presenter = new RestaurantPresenter(restaurant);
     }
 
     @Test
     public void test_getCreatedAt_formats_timestamp() throws Exception {
-        assertEquals("Created on 02/26/16", presenter.getCreatedAtInText());
+        assertEquals("Created on 2016-02-26 09:48:46 +0900", presenter.getCreatedAt());
     }
 
     @Test

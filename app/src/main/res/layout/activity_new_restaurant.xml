@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activities.RestaurantListActivity">
+    tools:context=".activities.NewRestaurantActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,10 +22,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/newRestaurantFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_restaurant_list" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        <fragment
+            android:name="io.pivotal.beach.osusume.android.fragments.NewRestaurantFragment"
+            android:id="@+id/newRestaurantFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_new_restaurant" />
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

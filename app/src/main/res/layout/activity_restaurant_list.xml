@@ -22,10 +22,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/restaurantListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_restaurant_list" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <fragment
+            android:name="io.pivotal.beach.osusume.android.fragments.RestaurantListFragment"
+            android:id="@+id/restaurantListFragment"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            tools:layout="@layout/fragment_restaurant_list" />
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

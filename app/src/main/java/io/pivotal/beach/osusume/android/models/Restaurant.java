@@ -3,7 +3,7 @@ package io.pivotal.beach.osusume.android.models;
 public class Restaurant {
     Integer id;
     String name;
-    Long created_at;
+    String created_at;
     User user;
 
     public Restaurant(String name, User user) {
@@ -11,7 +11,7 @@ public class Restaurant {
         this.user = user;
     }
 
-    public Restaurant(Integer id, String name, Long created_at, User user) {
+    public Restaurant(Integer id, String name, String created_at, User user) {
         this.id = id;
         this.name = name;
         this.created_at = created_at;
@@ -26,7 +26,7 @@ public class Restaurant {
         return name;
     }
 
-    public Long getCreatedAt() {
+    public String getCreatedAt() {
         return created_at;
     }
 

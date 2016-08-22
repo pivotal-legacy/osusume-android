@@ -1,5 +1,6 @@
 package io.pivotal.beach.osusume.android.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.pivotal.beach.osusume.android.R;
 import io.pivotal.beach.osusume.android.activities.NewRestaurantActivity;
+import io.pivotal.beach.osusume.android.activities.RestaurantDetailActivity;
 import io.pivotal.beach.osusume.android.models.Restaurant;
 import io.pivotal.beach.osusume.android.presenters.RestaurantPresenter;
 import retrofit2.Call;
@@ -69,6 +71,7 @@ public class RestaurantListFragment extends ApiFragment {
 
             @Override
             public void onFailure(Call<List<Restaurant>> call, Throwable t) {
+                System.out.println("Failed to retrieve restaurant list: call = [" + call + "], t = [" + t + "]");
             }
         });
     }
@@ -100,12 +103,8 @@ public class RestaurantListFragment extends ApiFragment {
                 Restaurant restaurant = restaurants.get(getAdapterPosition());
                 int id = restaurant.getId();
 
-                RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(id);
-                FragmentManager fragmentManager = RestaurantListFragment.this.getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.restaurantListFragment, detailFragment, RestaurantDetailFragment.TAG)
-                        .addToBackStack(null)
-                        .commit();
+                Intent restaurantDetailIntent = new Intent(getActivity(), RestaurantDetailActivity.class);
+                startActivity(restaurantDetailIntent);
             }
         }
 
@@ -121,7 +120,7 @@ public class RestaurantListFragment extends ApiFragment {
 
             holder.restaurantNameView.setText(restaurantPresenter.getName());
             holder.restaurantAuthorView.setText(restaurantPresenter.getAuthorName());
-            holder.restaurantCreatedAtView.setText(restaurantPresenter.getCreatedAtInText());
+            holder.restaurantCreatedAtView.setText(restaurantPresenter.getCreatedAt());
         }
 
         @Override

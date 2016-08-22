@@ -1,19 +1,22 @@
 package io.pivotal.beach.osusume.android.activities;
 
-import android.app.Activity;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import io.pivotal.beach.osusume.android.R;
-import io.pivotal.beach.osusume.android.fragments.NewRestaurantFragment;
-import io.pivotal.beach.osusume.android.fragments.RestaurantListFragment;
 
-public class RestaurantListActivity extends Activity {
+public class RestaurantListActivity extends AppCompatActivity {
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 }
