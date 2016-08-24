@@ -28,8 +28,8 @@ public class AppModule {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
                 .addInterceptor(authorizationHeaderInterceptor)
+                .addInterceptor(interceptor)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
