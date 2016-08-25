@@ -9,8 +9,8 @@ import io.pivotal.beach.osusume.android.fragments.ApiFragment;
 import io.pivotal.beach.osusume.android.fragments.NewRestaurantFragment;
 
 @Singleton
-@Component(modules={AppModule.class})
-public interface AppComponent {
+@Component(modules={TestModule.class})
+public interface TestComponent extends AppComponent {
     void inject(ApiFragment fragment);
     void inject(NewRestaurantActivity activity);
     void inject(LoginActivity activity);

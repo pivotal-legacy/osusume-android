@@ -63,4 +63,9 @@ public class UserActions {
     public static void clickButton(String text) {
         onView(allOf(withClassName(endsWith("Button")), withText(text))).perform(click());
     }
+
+    public static void selectInSpinner(int resId, String text) {
+        onView(withId(resId)).perform(click());
+        clickOn(text);
+    }
 }

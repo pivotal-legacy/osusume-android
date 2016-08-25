@@ -17,4 +17,8 @@ public class OsusumeApplication extends Application {
     public AppComponent getAppComponent() {
         return appComponent;
     }
+
+    public void setAppComponent(AppComponent appComponent) {
+        this.appComponent = appComponent;
+    }
 }
