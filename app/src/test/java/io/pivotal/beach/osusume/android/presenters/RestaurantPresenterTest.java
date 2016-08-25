@@ -13,7 +13,7 @@ import io.pivotal.beach.osusume.android.models.User;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class)
+@Config(constants = BuildConfig.class, sdk = 23)
 public class RestaurantPresenterTest {
 
     private RestaurantPresenter presenter;
