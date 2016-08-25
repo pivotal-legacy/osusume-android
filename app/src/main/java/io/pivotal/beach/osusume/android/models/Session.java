@@ -1,6 +1,6 @@
 package io.pivotal.beach.osusume.android.models;
 
-public class Token {
+public class Session {
     String token;
 
     public String getToken() {

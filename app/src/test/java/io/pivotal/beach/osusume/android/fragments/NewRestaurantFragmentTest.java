@@ -7,31 +7,24 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
-import io.pivotal.beach.osusume.android.AppComponent;
 import io.pivotal.beach.osusume.android.BuildConfig;
-import io.pivotal.beach.osusume.android.DaggerTestComponent;
-import io.pivotal.beach.osusume.android.OsusumeApplication;
-import io.pivotal.beach.osusume.android.TestModule;
 import io.pivotal.beach.osusume.android.models.NewRestaurant;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
+import static io.pivotal.beach.osusume.android.TestHelper.injectTestModule;
+import static io.pivotal.beach.osusume.android.TestHelper.flushThreadSchedulers;
 import static java.util.Arrays.asList;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static junit.framework.Assert.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.robolectric.Robolectric.flushBackgroundThreadScheduler;
-import static org.robolectric.Robolectric.flushForegroundThreadScheduler;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -54,7 +47,7 @@ public class NewRestaurantFragmentTest {
 
     @Test
     public void testOnCreateView_callsCuisineAndPriceRangeApis() throws Exception {
-        injectTestModule();
+        injectTestModule(server.url(""));
         setupMockResponses();
         startFragment(fragment);
 
@@ -69,10 +62,10 @@ public class NewRestaurantFragmentTest {
 
     @Test
     public void testOnCreateView_populatesCuisines() throws Exception {
-        injectTestModule();
+        injectTestModule(server.url(""));
         setupMockResponses();
         startFragment(fragment);
-        tick();
+        flushThreadSchedulers();
 
         Spinner spinner = fragment.cuisineSpinner;
         assertThat(spinner.getItemAtPosition(0)).isEqualTo("Not Specified");
@@ -81,10 +74,10 @@ public class NewRestaurantFragmentTest {
 
     @Test
     public void testOnCreateView_populatesPriceRanges() throws Exception {
-        injectTestModule();
+        injectTestModule(server.url(""));
         setupMockResponses();
         startFragment(fragment);
-        tick();
+        flushThreadSchedulers();
 
         Spinner spinner = fragment.priceRangeSpinner;
         assertThat(spinner.getItemAtPosition(0)).isEqualTo("Not Specified");
@@ -93,10 +86,10 @@ public class NewRestaurantFragmentTest {
 
     @Test
     public void test_getNewRestaurant() throws Exception {
-        injectTestModule();
+        injectTestModule(server.url(""));
         setupMockResponses();
         startFragment(fragment);
-        tick();
+        flushThreadSchedulers();
         fragment.restaurantNameField.setText("Afuri");
 
         NewRestaurant actual = fragment.getNewRestaurant();
@@ -119,19 +112,5 @@ public class NewRestaurantFragmentTest {
                 return new MockResponse().setResponseCode(404);
             }
         });
-    }
-
-    private void tick() throws Exception {
-        flushBackgroundThreadScheduler();
-        new CountDownLatch(1).await(100, MILLISECONDS);
-        flushForegroundThreadScheduler();
-    }
-
-    private void injectTestModule() {
-        AppComponent appComponent = DaggerTestComponent.builder()
-                .testModule(new TestModule(server.url("")))
-                .build();
-
-        ((OsusumeApplication) RuntimeEnvironment.application).setAppComponent(appComponent);
     }
 }
